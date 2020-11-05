@@ -3,8 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/anaskhan96/soup"
-	"github.com/szeliga/goray/engine"
 	"image"
 	"image/color"
 	"io"
@@ -15,6 +13,9 @@ import (
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/anaskhan96/soup"
+	"github.com/szeliga/goray/engine"
 )
 
 var CommonHomepages = []string{"/", "default.aspx", "index.html", "home.html"}
@@ -106,13 +107,11 @@ func DownloadFileAndSave(filepath string, url string) error {
 	}
 	defer resp.Body.Close()
 
-
 	out, err := os.Create(filepath)
 	if err != nil {
 		return err
 	}
 	defer out.Close()
-
 
 	_, err = io.Copy(out, resp.Body)
 	return err
@@ -155,7 +154,6 @@ func AverageImageColor(i image.Image) color.Color {
 	return color.RGBA{uint8(g), uint8(b), uint8(r), 200}
 }
 
-
 func CreateRandomImage(c color.Color) {
 	width := 200
 	height := 200
@@ -169,7 +167,7 @@ func CreateRandomImage(c color.Color) {
 
 func main() {
 	link := os.Args[1]
-	
+
 	resp := ScrapeContent(link)
 	logoLink := ParseHTML(resp, link)
 
